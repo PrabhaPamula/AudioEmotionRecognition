@@ -1,0 +1,368 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 50px 15px 50px;
+    border-bottom: 1px solid rgb(214, 211, 211);
+    box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);
+}
+.header .logo {
+    font-size: 20px;
+}
+.header .logo span {
+    font-weight: 800;
+    color: #1877f2;
+}
+.header ul {
+    list-style-type: none;
+    display: flex;
+    gap: 15px;
+}
+.header ul li a {
+    text-decoration: none;
+    color: black;
+    font-weight: 300;
+    font-size: 18px;
+}
+.header ul li a:hover {
+    color: #1877f2;
+}
+.header ul li .loginbtn {
+    border: 1px solid #1877f2;
+    padding: 7px 15px;
+}
+.header ul li .loginbtn:hover {
+    background-color: #1877f2;
+    color: white;
+}
+
+/* banner */
+.banner {
+    padding: 60px 0px;
+    /* background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)), url("/images/bg8.jpg"); */
+    background-image: url('../static/images/bg10.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.banner-content {
+    width: 85%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+    padding: 0px 50px;
+}
+.banner-content .btn {
+    margin-top: 30px;
+}
+.banner-content .btn a{
+    text-decoration: none;
+    padding: 12px 30px;
+    font-size: 20px;
+    background: transparent;
+    border: 1px solid #1877f2;
+    cursor: pointer;
+    color: black;
+    font-weight: 300;
+}
+.banner-content .btn a:hover {
+    background-color: #1877f2;
+    color: white;
+}
+.banner div p {
+    font-size: 45px;
+    font-weight: 600;
+}
+.banner .tagline {
+    flex-basis: 70%;
+}
+.banner img{
+    width: 350px;
+    flex-basis: 30%;
+}
+
+/* about */
+.about {
+    padding-top: 50px;
+    width: 85%;
+    margin: auto;
+}
+.about .title {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* features */
+.features {
+    padding-top: 50px;
+    width: 85%;
+    margin: auto;
+}
+.features .title {
+    text-align: center;
+    margin-bottom: 15px;
+}
+.features .card-container {
+    display: flex;
+    justify-content: space-between;
+}
+.features .card-container .card {
+    background-color: #f1f2f4;
+    flex-basis: 30%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: transform 0.3s ease-in-out;
+}
+.card .card-content {
+    padding: 20px;
+}
+.card .card-content h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.features .card-container .card:hover {
+    transform: translateY(-5px);
+}
+.features .card-container .card img{
+    width: 100%;
+    height: 200px;
+}
+
+/* footer */
+.footer {
+    margin-top: 50px;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(34, 33, 33);
+    color: white;
+    font-size: 20px;
+    gap: 20px;
+}
+.footer .contact-icon:hover {
+    color: #1877f2;
+}
+
+
+/* prediction page css */
+.main-container {
+    width: 85%;
+    margin: auto;
+    text-align: center;
+    align-items: center;
+}
+.input-section {
+    margin-top: 50px;
+}
+.input-section h1{
+    margin-bottom: 30px;
+}
+.input-section .holder {
+    margin-bottom: 30px; 
+}
+.input-section .holder .icons {
+    background-color: #1877f2;
+    border: 1px solid #1877f2;
+    border-radius: 50%;
+    margin-right: 20px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 10px 20px;
+    font-size: 24px;
+    color: white; 
+    transition: background-color 0.3s ease; 
+}
+.input-section .holder .icons.recording {
+    background-color: red;
+    border: 1px solid red;
+}
+.input-section .holder .downloadicon {
+    border: 1px solid #1877f2;
+    border-radius: 50%;
+    font-size: 24px;
+    padding: 10px 18px;
+    transition: background-color 0.3s ease; 
+}
+.input-section .holder .downloadicon:hover {
+    background-color: #1877f2;
+    color: white;
+ }
+.input-section form {
+    margin: 20px 0px;
+}
+
+.input-section .btn {
+    background: transparent;
+    border: 1px solid #1877f2;
+    cursor: pointer;
+}
+.input-section .btn:hover {
+    background-color: #1877f2;
+    color: white;
+}
+.input-section form button {
+    padding: 10px 20px;
+    margin-top: 20px;
+}
+
+.input-section .preview {
+    display: flex;
+    font-size: 20px;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+form  input[type="file"]{
+    display: none;
+}
+
+form label {
+    display: block;
+    margin: auto;
+    text-align: center;
+    width: 135px;
+    cursor: pointer;
+    background-color: #1877f2;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* output-section */
+.output-section {
+   margin: 50px 0px;
+}
+.output-section .output-graphs {
+    display: flex;
+    gap: 20px;
+}
+.output-section .graphs{
+    flex-basis: 50%;
+    margin: 15px 0px;
+}
+.output-section .graphs p{
+    font-size: 20px;
+    font-weight: 300;
+    text-align: left;
+    margin-bottom: 15px;
+}
+.output-section .graph {
+    background-color: #f1f2f4;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: auto;
+    padding: 10px 20px;
+}
+.emotion-output {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+.vl {
+    border-left: 1px solid #a19f9f;
+  }
+.output-section .final-result {
+    margin-top: 50px;
+}
+
+
+/* responsiveness */
+@media screen and (max-width:780px) {
+    .output-section .output-graphs {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .vl {
+        display: none;
+      }
+}
+
+@media screen and (max-width:680px) {
+    .banner-content {
+        width: 85%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: auto;
+        padding: 0px 50px;
+    }
+    .banner-content .btn {
+        margin-top: 30px;
+    }
+    .banner-content .btn a{
+        text-decoration: none;
+        padding: 12px 30px;
+        font-size: 20px;
+        background: transparent;
+        border: 1px solid #1877f2;
+        cursor: pointer;
+        color: black;
+        font-weight: 300;
+    }
+    .banner-content .btn a:hover {
+        background-color: #1877f2;
+        color: white;
+    }
+    .banner div p {
+        font-size: 30px;
+        font-weight: 600;
+    }
+    .banner img{
+        width: 250px;
+    }
+}
+@media screen and (max-width:600px) {
+    .banner-content {
+        width: 85%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        margin: auto;
+        padding: 0px 50px;
+    }
+    .banner-content .btn {
+        margin-top: 30px;
+    }
+    .banner-content .btn a{
+        text-decoration: none;
+        padding: 12px 30px;
+        font-size: 20px;
+        background: transparent;
+        border: 1px solid #1877f2;
+        cursor: pointer;
+        color: black;
+        font-weight: 300;
+    }
+    .banner-content .btn a:hover {
+        background-color: #1877f2;
+        color: white;
+    }
+    .banner div p {
+        font-size: 30px;
+        font-weight: 600;
+    }
+    .banner img{
+        display: none;
+    }
+    .features .card-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+    }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 10px 15px 10px;
+        border-bottom: 1px solid rgb(214, 211, 211);
+        box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.2);
+    }
+}

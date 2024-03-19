@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://markjivko.com/dist/recorder.js"></script>
+    <!-- Include the Recorder library from a CDN -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/lamejs/1.2.1/lame.all.min.js'></script>
+
+
+
+    <!--<script>
+        let mediaRecorder;
+        let audioChunks = [];
+        let isRecording = false;
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleButton = document.getElementById('toggleButton');
+            const downloadButton = document.getElementById('downloadButton');
+    
+            toggleButton.addEventListener('click', toggleRecording);
+            downloadButton.addEventListener('click', downloadRecording);
+    
+            async function toggleRecording() {
+                if (!isRecording) {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    audioChunks = [];
+                    mediaRecorder = new MediaRecorder(stream);
+    
+                    mediaRecorder.ondataavailable = event => {
+                        if (event.data.size > 0) {
+                            audioChunks.push(event.data);
+                        }
+                    };
+    
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        downloadButton.href = audioUrl;
+                        downloadButton.download = 'recording.wav';
+                        downloadButton.disabled = false;
+                    };
+    
+                    mediaRecorder.start();
+                    toggleButton.innerHTML = '<i class="fas fa-microphone startrecorder"></i>';
+                    toggleButton.classList.add('recording');
+                    isRecording = true;
+                } else {
+                    mediaRecorder.stop();
+                    toggleButton.innerHTML = '<i class="fas fa-microphone icon"></i>';
+                    toggleButton.classList.remove('recording');
+                    isRecording = false;
+                }
+            }
+    
+            function downloadRecording() {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const a = document.createElement('a');
+                a.href = audioUrl;
+                a.download = 'recording.wav';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                downloadButton.disabled = true;
+                audioChunks = [];
+            }
+        });
+      </script> -->
+
+
+      <script>
+        var uploadedAudioFile;
+        var recordedAudioData;
+
+        jQuery(document).ready(function () {
+          var $ = jQuery;
+          var myRecorder = {
+            objects: {
+              context: null,
+              stream: null,
+              recorder: null
+            },
+            init: function () {
+              if (null === myRecorder.objects.context) {
+                myRecorder.objects.context = new (
+                  window.AudioContext || window.webkitAudioContext
+                );
+              }
+            },
+            start: function () {
+              var options = { audio: true, video: false };
+              navigator.mediaDevices.getUserMedia(options)
+                .then(function (stream) {
+                  myRecorder.objects.stream = stream;
+                  myRecorder.objects.recorder = new Recorder(
+                    myRecorder.objects.context.createMediaStreamSource(stream),
+                    { numChannels: 1 }
+                  );
+                  myRecorder.objects.recorder.record();
+
+                })
+                .catch(function (err) { console.error('Error accessing microphone:', err); });
+            },
+            stop: function () {
+              if (null !== myRecorder.objects.stream) {
+                myRecorder.objects.stream.getAudioTracks()[0].stop();
+              }
+              if (null !== myRecorder.objects.recorder) {
+                myRecorder.objects.recorder.stop();
+      
+                myRecorder.objects.recorder.exportWAV(function (blob) {
+                  var url = (window.URL || window.webkitURL).createObjectURL(blob);
+
+                   // Create a new anchor tag
+                var downloadAnchor = $("<a></a>")
+                .attr("href", url)
+                .attr("download", new Date().toUTCString() + ".wav")
+                .html('<i class="icon fas fa-download"></i>'); // Optionally, you can add an icon
+
+                // Empty the download button and append the anchor tag
+                $("#downloadButton").empty().append(downloadAnchor);
+
+                recordedAudioData = blob;
+
+                previewAudio(recordedAudioData);
+
+                });
+              }
+            },
+
+          };
+      
+          // Prepare the record button
+          $("#toggleButton").click(function () {
+            // Get the button state
+            var buttonState = $(this).hasClass("recording");
+      
+            // Toggle recording
+            if (!buttonState) {
+              $(this).addClass("recording");
+              myRecorder.init();
+              myRecorder.start();
+            } else {
+              $(this).removeClass("recording");
+              myRecorder.stop();
+            }
+          });
+            // Function to preview recorded audio
+            function previewAudio(blob) {
+                var audioUrl = (window.URL || window.webkitURL).createObjectURL(blob);
+                player.src = audioUrl;
+            }
+        });
+      </script>
+</head>
+
+<body>
+    <div class="prediction-container">
+        <!-- Header section -->
+        <div class="header">
+            <div class="logo">
+                Emo<span>Detect</span>
+            </div>
+            <ul>
+                <li><a href="{{ url_for('home') }}">About</a></li>
+                <li><a href="{{ url_for('prediction') }}">Demo</a></li>
+                <li><a href="#" class="loginbtn">Login</a></li>
+            </ul>
+        </div>
+
+        <div class="main-container">
+            <!-- prediction-body -->
+            <div class="input-section">
+
+                <h1>Record Audio Here!</h1>
+                <!-- record section -->
+                <div class="holder">
+                    <button id="toggleButton" class="icons"><i class="icon fas fa-microphone"></i></button>
+                    <button id="downloadButton" class="downloadicon" disabled><i class=" icon fas fa-download"></i></button>
+                </div>
+
+                <!-- upload section -->
+                <div>
+                    <form class="" action="/predict", method="post" enctype="multipart/form-data">
+                        <label class="choosefile">Choose speech file<input type="file" accept="audio/*" name="audfile" capture id="recorder" /></label>
+                        <label class="choosefile">Choose heartrate file<input type="file" accept="audio/*" name="heartfile" capture id="recorder" /></label>
+                        <button type="submit" id="predictButton" class="btn">Predict Emotion</button>
+                    </form>
+                </div>
+
+                <div class="preview">
+                    <p>Preview audio</p>
+                    <audio id="player" controls></audio>
+                </div>
+            </div>
+
+            <!-- output-section -->
+            <div class="output-section">
+                <div class="output-graphs">
+                    <div class="graphs">
+                        <p>Speech audio results</p>
+                        <div class="graph"><canvas id= 'speechAudioChart'></div>
+                        </canvas>
+                    </div>
+
+                    <div class="vl"></div>
+
+                    <div class="graphs">
+                        <p>Heartrate audio results</p>
+                        <div class="graph"><canvas id= 'heartRateChart'></div>
+                        </canvas>
+                    </div>
+                </div>
+
+                <div class="emotion-output">
+
+                {%if prediction%}
+                    <h2 class="final-result">Speech Emotion : {{prediction}}</h2>
+                    <h2 class="final-result">Heart Emotion : {{hprediction}}</h2>   
+                {%endif%}
+                </div>
+            </div>
+
+        </div>
+
+
+        {% if prediction %}
+            <script>
+                let myChart = document.getElementById('speechAudioChart').getContext('2d')
+                let myChart1 = document.getElementById('heartRateChart').getContext('2d')
+                let ProbChart = new Chart(myChart, {
+                    type : 'bar',
+                    data : {
+                        labels : ["Angry","Sad","Neutral","Happy"],
+                        datasets : [{
+                            label : 'Probability %',
+                            data: ['{{prob[0]}}','{{prob[1]}}','{{prob[2]}}','{{prob[3]}}'],
+                            backgroundColor : ['lightpink','yellow','lightgreen','lightblue'],
+                            borderWidth : 1,
+                            boederColor : 'gray',
+                            hoverBorderWidth : 1,
+                            hoverBorderColor : 'gray',
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                min: 0,
+                                max: 100,
+                                ticks: {
+                                    stepSize: 5,
+                                }
+                            }
+                        }
+                    }
+                })
+
+                let ProbChart1 = new Chart(myChart1, {
+                    type : 'bar',
+                    data : {
+                        labels : ["Angry","Sad","Neutral","Happy"],
+                        datasets : [{
+                            label : 'Probability %',
+                            data: ['{{hprob[0]}}','{{hprob[1]}}','{{hprob[2]}}','{{hprob[3]}}'],
+                            backgroundColor : ['lightpink','yellow','lightgreen','lightblue'],
+                            borderWidth : 1,
+                            boederColor : 'gray',
+                            hoverBorderWidth : 1,
+                            hoverBorderColor : 'gray',
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                min: 0,
+                                max: 100,
+                                ticks: {
+                                    stepSize: 5,
+                                }
+                            }
+                        }
+                    }
+                })
+                </script>
+        {% endif %}
+
+
+
+        <!-- Footer section -->
+        <div class="footer">
+            <div>
+                <i class="fa-brands fa-facebook contact-icon"></i>
+            </div>
+            <div>
+                <i class="fa-brands fa-twitter contact-icon"></i>
+            </div>
+            <div>
+                <i class="fa-brands fa-instagram contact-icon"></i>
+            </div>
+            <div>
+                <i class="fa-brands fa-github contact-icon"></i>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+<script>
+    function predictEmotion() {
+        var fileInput = document.getElementById('audfile');
+        var file = fileInput.files[0];
+
+        var formData = new FormData();
+        formData.append('audfile', file);
+
+        $.ajax({
+            url: '/predict',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                // Handle the response from the server
+                console.log(response);
+                alert('Prediction successful! Result: ' + response);
+            },
+            error: function(error) {
+                // Handle any errors that occurred during the request
+                console.error(error);
+            }
+        });
+    }
+</script>
+
+<script>
+    let myChart = document.getElementById('speechAudioChart').getContext('2d')
+    let myChart1 = document.getElementById('heartRateChart').getContext('2d')
+    let ProbChart = new Chart(myChart, {
+        type : 'bar',
+        data : {
+            labels : ["Angry","Sad","Neutral","Happy"],
+            datasets : [{
+                label : 'Probability %',
+                data: [0,0,0,0],
+                // data : '{{prob}}',
+                backgroundColor : ['lightpink','yellow','lightgreen','lightblue'],
+                borderWidth : 1,
+                boederColor : 'gray',
+                hoverBorderWidth : 1,
+                hoverBorderColor : 'gray',
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    min: 0,
+                    max: 100,
+                    ticks: {
+                        stepSize: 5,
+                    }
+                }
+            }
+        }
+    })
+
+
+    let ProbChart1 = new Chart(myChart1, {
+        type : 'bar',
+        data : {
+            labels : ["Angry","Sad","Neutral","Happy"],
+            datasets : [{
+                label : 'Probability %',
+                data: [0,0,0,0],
+                // data : '{{prob}}',
+                backgroundColor : ['lightpink','yellow','lightgreen','lightblue'],
+                borderWidth : 1,
+                boederColor : 'gray',
+                hoverBorderWidth : 1,
+                hoverBorderColor : 'gray',
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    min: 0,
+                    max: 100,
+                    ticks: {
+                        stepSize: 5,
+                    }
+                }
+            }
+        }
+    })
+    </script>
+
+    <script>
+        const recorder = document.getElementById('recorder');
+        const player = document.getElementById('player');
+
+        recorder.addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        const url = URL.createObjectURL(file);
+        // Do something with the audio file.
+        player.src = url;
+
+        });
+    </script>
+</html>

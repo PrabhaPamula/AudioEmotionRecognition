@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header section -->
+        <div class="header">
+            <div class="logo">
+                Emo<span>Detect</span>
+            </div>
+            <ul>
+                <li><a href="{{ url_for('home') }}">About</a></li>
+                <li><a href="{{ url_for('prediction') }}">Demo</a></li>
+                <li><a href="#" class="loginbtn">Login</a></li>
+            </ul>
+        </div>
+
+        <!-- banner section-->
+        <div class="banner">
+            <div class="banner-content">
+                <div class="tagline">
+                    <p>Detect your Emotion <br>anywhere <br>and <br>anytime!</p>
+                    <div class="btn">
+                        <a href="{{ url_for('prediction') }}">Try now</a>
+                    </div>
+                </div>
+                <img src="{{ url_for('static', filename='images/img2.png') }}"/>
+            </div>
+        </div>
+
+        <!-- About section -->
+        <div class="about">
+            <div class="title"><h1>About the Project</h1></div>
+            <p>
+                Emotion Recognition is a trending research topic these days, with its main motive to improve human-machine interaction. 
+                As human beings, speech is the most natural way to express oneself. Emotions can be determined considering various 
+                factors like speech, facial expressions, and body language. Also, Auscultation tests are performed to listen to the 
+                sounds of internal organs like lungs, heart, etc using a stethoscope. The existing classifiers are found to be good 
+                at end-to-end audio classification models, aiming to learn a direct mapping from audio spectrograms to corresponding 
+                labels. 
+                <br>
+                <br>
+                The proposed idea is to define an Emotion Recognition (ER) system as a collection of methodologies by correlating audio 
+                signals and heartbeats of an individual for the detection of various emotions. The system aims to extract the most 
+                prominent features from the input audio file imported using a microphone and the sounds of the heart is measured 
+                via a digital stethoscope. As emotions bring a greater impact on the functionality of heart rate, the recognizer 
+                is allowed to view the auscultation signal in the form of wave plots (heart rate), the pitch diagram (for input speech), 
+                and the resultant of both will help in the classification of individual emotions using deep learning techniques. 
+                Such a system can be used in a wide variety of application areas like interactive voice-based-assistant or 
+                caller-agent conversation and analysis of human mental and heart health prediction and human-robot interaction. 
+
+            </p>
+        </div>
+
+        <!-- Features section -->
+        <div class="features">
+            <div class="title"><h1>Features</h1></div>
+            <div class="card-container">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/feature1.png') }}"/>
+                    <div class="card-content">
+                        <h3>Hindi Language</h3>
+                        <p>System is mainly focused on hindi language.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/feature1.png') }}"/>
+                    <div class="card-content">
+                        <h3>Real-time prediction</h3>
+                        <p>User will be able to record audio at real time.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/feature1.png') }}"/>
+                    <div class="card-content">
+                        <h3>Detailed results</h3>
+                        <p>Provide visual representaions of predicted emotions through graphs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer section -->
+        <div class="footer">
+            <div>
+                <i class="fa-brands fa-facebook contact-icon"></i>
+            </div>
+            <div>
+                <i class="fa-brands fa-twitter contact-icon"></i>
+            </div>
+            <div>
+                <i class="fa-brands fa-instagram contact-icon"></i>
+            </div>
+            <div>
+                <i class="fa-brands fa-github contact-icon"></i>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
