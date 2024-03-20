@@ -31,21 +31,44 @@ def prediction():
 
 @app.route('/predict', methods=['POST'])
 def predictOutput():
-    audfile = request.files['audfile']
-    heartfile = request.files['heartfile']
-    # aud_path = "./audio/"+audfile.mp3
-    # audfile.save(aud_path)
-    a=()
-    h=()
-    # haudio_cleaned = noiseremove(heartfile)
-    a=predict(audfile)
-    h=predictHeart(heartfile)
-    # h=predictHeart(haudio_cleaned)
-    emo=a[0]
-    prob=[a[1],a[2],a[3],a[4]]
-    hemo=h[0]
-    hprob = [h[1],h[2],h[3],h[4]]
-    return render_template('prediction.html', prediction=emo, prob=prob,hprediction=hemo, hprob=hprob)
+    if request.method == 'POST':
+        audfile = request.files['audfile']
+        heartfile = request.files['heartfile']
+        
+        # Process the files and get predictions
+        a = predict(audfile)
+        h = predictHeart(heartfile)
+        
+        # Extract predictions and probabilities
+        emo = a[0]
+        prob = [a[1], a[2], a[3], a[4]]
+        hemo = h[0]
+        hprob = [h[1], h[2], h[3], h[4]]
+        
+        # Render the template with prediction results
+        return render_template('prediction.html', prediction=emo, prob=prob, hprediction=hemo, hprob=hprob)
+    else:
+        # Render the template without any prediction data
+        return render_template('prediction.html')
+
+
+
+
+    # audfile = request.files['audfile']
+    # heartfile = request.files['heartfile']
+    # # aud_path = "./audio/"+audfile.mp3
+    # # audfile.save(aud_path)
+    # a=()
+    # h=()
+    # # haudio_cleaned = noiseremove(heartfile)
+    # a=predict(audfile)
+    # h=predictHeart(heartfile)
+    # # h=predictHeart(haudio_cleaned)
+    # emo=a[0]
+    # prob=[a[1],a[2],a[3],a[4]]
+    # hemo=h[0]
+    # hprob = [h[1],h[2],h[3],h[4]]
+    # return render_template('prediction.html', prediction=emo, prob=prob,hprediction=hemo, hprob=hprob)
 
 
 # def load_audio(heartfile):

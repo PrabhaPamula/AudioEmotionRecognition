@@ -176,10 +176,11 @@
         </div>
 
         <div class="main-container">
-            <!-- prediction-body -->
+
             <div class="input-section">
 
-                <h1>Record Audio Here!</h1>
+                <h1>Record or Upload Audio Here!</h1>
+                <div class="user-inputs">
                 <!-- record section -->
                 <div class="holder">
                     <button id="toggleButton" class="icons"><i class="icon fas fa-microphone"></i></button>
@@ -187,18 +188,31 @@
                 </div>
 
                 <!-- upload section -->
-                <div>
+                <div class="form-container">
                     <form class="" action="/predict", method="post" enctype="multipart/form-data">
-                        <label class="choosefile">Choose speech file<input type="file" accept="audio/*" name="audfile" capture id="recorder" /></label>
-                        <label class="choosefile">Choose heartrate file<input type="file" accept="audio/*" name="heartfile" capture id="recorder" /></label>
+                        <div class="choosefile-btns">
+                        <div><label class="choosefile" id="c1">Choose speech file<input type="file" accept="audio/*" name="audfile" capture id="recorder" /></label> Preview file <audio id="player" controls></audio></div>
+                        <div><label class="choosefile" id="c2">Choose heartrate file<input type="file" accept="audio/*" name="heartfile" capture id="recorder" /></label> Preview file <audio id="heartrateplayer" controls></audio></div>
+                        </div>
+
+                        
+                        <div class="main-btn">
                         <button type="submit" id="predictButton" class="btn">Predict Emotion</button>
+                        </div>
                     </form>
                 </div>
 
-                <div class="preview">
-                    <p>Preview audio</p>
+                <!--<div class="preview">
+                    <div class="preview-player1">
+                    <p>Preview speech audio</p>
                     <audio id="player" controls></audio>
-                </div>
+                    </div>
+                    <div class="preview-player2">
+                    <p>Preview heartrate audio</p>
+                    <audio id="heartrateplayer" controls></audio>
+                    </div>
+                </div>-->
+            </div>
             </div>
 
             <!-- output-section -->
@@ -222,8 +236,9 @@
                 <div class="emotion-output">
 
                 {%if prediction%}
-                    <h2 class="final-result">Speech Emotion : {{prediction}}</h2>
-                    <h2 class="final-result">Heart Emotion : {{hprediction}}</h2>   
+
+                    <div><h2 class="final-result">Speech Emotion : {{prediction}}</h2></div>
+                    <div><h2 class="final-result">Heart Emotion : {{hprediction}}</h2></div>   
                 {%endif%}
                 </div>
             </div>
@@ -293,8 +308,6 @@
                 </script>
         {% endif %}
 
-
-
         <!-- Footer section -->
         <div class="footer">
             <div>
@@ -312,6 +325,42 @@
         </div>
 
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const speechFileInput = document.querySelector("#c1 input[type=file]");
+            const heartRateFileInput = document.querySelector("#c2 input[type=file]");
+            const speechPreview = document.getElementById("player");
+            const heartRatePreview = document.getElementById("heartrateplayer");
+    
+            speechFileInput.addEventListener("change", function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        speechPreview.src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    speechPreview.src = "";
+                }
+            });
+    
+            heartRateFileInput.addEventListener("change", function () {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        heartRatePreview.src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    heartRatePreview.src = "";
+                }
+            });
+        });
+    </script>
+    
 </body>
 
 <script>
